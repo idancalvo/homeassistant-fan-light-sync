@@ -6,16 +6,16 @@
   mode: single
   variables:
     fan_map:
-      switch.bedroom_switch: fan.bedroom_fan
-      switch.kidsroom_switch: fan.kidsroom_fan
-      switch.playroom_switch: fan.playroom_fan
+      switch.bedroom_switch_fan: fan.bedroom_fan
+      #switch.kidsroom_switch_fan: fan.kidsroom_fan
+      #switch.playroom_switch_fan: fan.playroom_fan
 
   trigger:
     - platform: state
       entity_id:
-        - switch.bedroom_switch
-        - switch.kidsroom_switch
-        - switch.playroom_switch
+        - switch.bedroom_switch_fan
+        #- switch.kidsroom_switch_fan
+        #- switch.playroom_switch_fan
 
   condition:
     - condition: template
