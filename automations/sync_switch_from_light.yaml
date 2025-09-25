@@ -9,15 +9,15 @@
   variables:
     switch_map:
       light.bedroom_light: switch.bedroom_light_switch
-      light.kidsroom_light: switch.kidsroom_light_switch
-      light.playroom_light: switch.playroom_light_switch
+      #light.kidsroom_light: switch.kidsroom_light_switch
+      #light.playroom_light: switch.playroom_light_switch
 
   trigger:
     - platform: state
       entity_id:
         - light.bedroom_light
-        - light.kidsroom_light
-        - light.playroom_light
+        #- light.kidsroom_light
+        #- light.playroom_light
 
   condition:
     - condition: template
