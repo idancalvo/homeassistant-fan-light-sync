@@ -8,9 +8,9 @@
 
   variables:
     switch_map:
-      light.bedroom_light: switch.bedroom_light_switch
-      #light.kidsroom_light: switch.kidsroom_light_switch
-      #light.playroom_light: switch.playroom_light_switch
+      light.bedroom_light: switch.bedroom_switch_light
+      #light.kidsroom_light: switch.kidsroom_switch_light
+      #light.playroom_light: switch.playroom_switch_light
 
   trigger:
     - platform: state
