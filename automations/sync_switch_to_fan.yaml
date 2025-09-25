@@ -1,0 +1,39 @@
+- id: 'xxxxxxxxxxxx3'
+  alias: Sync Switch to Fan Rooms
+  description: >
+    Turn fans on/off based on switch state changes,
+    including loop prevention.
+  mode: single
+  variables:
+    fan_map:
+      switch.bedroom_switch: fan.bedroom_fan
+      switch.kidsroom_switch: fan.kidsroom_fan
+      switch.playroom_switch: fan.playroom_fan
+
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.bedroom_switch
+        - switch.kidsroom_switch
+        - switch.playroom_switch
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.context.parent_id == none }}"
+
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == 'on' }}"
+          sequence:
+            - service: fan.turn_on
+              target:
+                entity_id: "{{ fan_map[trigger.entity_id] }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == 'off' }}"
+          sequence:
+            - service: fan.turn_off
+              target:
+                entity_id: "{{ fan_map[trigger.entity_id] }}"
