@@ -1,0 +1,41 @@
+- id: 'xxxxxxxxxxxx2'
+  alias: Sync Light from Switch (Generic with map)
+  description: >
+    Automation to turn on/off lights based on switch state changes,
+    using a mapping from switch to light entities,
+    with loop prevention.
+  mode: single
+
+  variables:
+    light_map:
+      switch.bedroom_light_switch: light.bedroom_light
+      switch.kidsroom_light_switch: light.kidsroom_light
+      switch.playroom_light_switch: light.playroom_light
+
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.bedroom_light_switch
+        - switch.kidsroom_light_switch
+        - switch.playroom_light_switch
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.context.parent_id == none }}"
+
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == 'on' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: "{{ light_map[trigger.entity_id] }}"
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == 'off' }}"
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: "{{ light_map[trigger.entity_id] }}"
