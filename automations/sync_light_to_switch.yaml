@@ -1,0 +1,46 @@
+- id: 'xxxxxxxxxxxx4'
+  alias: Sync Light To Switch
+  description: >
+    Synchronize switches based on light state changes,
+    using a mapping from light to switch entities,
+    with loop prevention.
+  mode: single
+
+  variables:
+    switch_map:
+      light.bedroom_light: switch.bedroom_switch_light
+      #light.kidsroom_light: switch.kidsroom_switch_light
+      #light.playroom_light: switch.playroom_switch_light
+
+  trigger:
+    - platform: state
+      entity_id:
+        - light.bedroom_light
+        #- light.kidsroom_light
+        #- light.playroom_light
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.context.parent_id == none }}"
+
+action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ trigger.to_state.state == 'on' and
+                   states(switch_map[trigger.entity_id]) != 'on' }}
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: "{{ switch_map[trigger.entity_id] }}"
+
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ trigger.to_state.state == 'off' and
+                   states(switch_map[trigger.entity_id]) != 'off' }}
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: "{{ switch_map[trigger.entity_id] }}"
