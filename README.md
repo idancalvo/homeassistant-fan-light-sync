@@ -46,10 +46,10 @@ To add more, extend the mappings in the YAML files accordingly.
 1. **Save the Files**  
    Place the following YAML files in the `automations` folder inside your Home Assistant config directory (usually `/config/automations/`):
 
-   - `sync_fan_to_switch_rooms.yaml`
-   - `sync_light_from_switch.yaml`
-   - `sync_switch_to_fan.yaml`
-   - `sync_switch_from_light.yaml`
+- `sync_fan_to_switch.yaml`
+- `sync_light_to_switch.yaml`
+- `sync_switch_to_fan.yaml`
+- `sync_switch_to_light.yaml`
 
 2. **Load Automations in Home Assistant**
 
