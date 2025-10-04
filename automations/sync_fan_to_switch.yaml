@@ -1,5 +1,5 @@
 - id: 'xxxxxxxxxxxx1'
-  alias: Sync Fan to Switch Rooms
+  alias: Sync Fan to Switch
   description: >
     Synchronize switches based on fan state changes,
     including loop prevention.
