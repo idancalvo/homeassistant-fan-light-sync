@@ -1,5 +1,5 @@
 - id: 'xxxxxxxxxxxx2'
-  alias: Sync Light from Switch (Generic with map)
+  alias: Sync Switch To Light
   description: >
     Automation to turn on/off lights based on switch state changes,
     using a mapping from switch to light entities,
@@ -27,14 +27,19 @@
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.to_state.state == 'on' }}"
+              value_template: >
+                {{ trigger.to_state.state == 'on' and
+                   states(light_map[trigger.entity_id]) != 'on' }}
           sequence:
             - service: light.turn_on
               target:
                 entity_id: "{{ light_map[trigger.entity_id] }}"
+
         - conditions:
             - condition: template
-              value_template: "{{ trigger.to_state.state == 'off' }}"
+              value_template: >
+                {{ trigger.to_state.state == 'off' and
+                   states(light_map[trigger.entity_id]) != 'off' }}
           sequence:
             - service: light.turn_off
               target:
