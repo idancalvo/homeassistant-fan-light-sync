@@ -51,10 +51,11 @@
 ```
 
 קבצים לדוגמה:
-- `sync_fan_to_switch_rooms.yaml`
-- `sync_light_from_switch.yaml`
+- `sync_fan_to_switch.yaml`
+- `sync_light_to_switch.yaml`
 - `sync_switch_to_fan.yaml`
-- `sync_switch_from_light.yaml`
+- `sync_switch_to_light.yaml`
+
 
 ### 2. טעינת האוטומציות
 
