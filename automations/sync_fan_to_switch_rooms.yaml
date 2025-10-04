@@ -21,18 +21,23 @@
     - condition: template
       value_template: "{{ trigger.to_state.context.parent_id == none }}"
 
-  action:
+   action:
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.to_state.state == 'on' }}"
+              value_template: >
+                {{ trigger.to_state.state == 'on' and
+                   states(switch_map[trigger.entity_id]) != 'on' }}
           sequence:
             - service: switch.turn_on
               target:
                 entity_id: "{{ switch_map[trigger.entity_id] }}"
+
         - conditions:
             - condition: template
-              value_template: "{{ trigger.to_state.state == 'off' }}"
+              value_template: >
+                {{ trigger.to_state.state == 'off' and
+                   states(switch_map[trigger.entity_id]) != 'off' }}
           sequence:
             - service: switch.turn_off
               target:
